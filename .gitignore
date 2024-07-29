@@ -13,5 +13,6 @@ logs/
 *.log
 
 # Ignore the orders folder inside src
-/src/Orders/
-/src/users/
+/src/app/module/Orders/
+/src/app/module/users/
+/src/app/module/auth/
