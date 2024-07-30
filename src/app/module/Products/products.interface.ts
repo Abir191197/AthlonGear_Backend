@@ -6,5 +6,6 @@ export interface TProduct {
   price: number;
   imageLink: string;
   stock: number;
+  rating: number;
   isDeleted: boolean;
 }
