@@ -23,7 +23,11 @@ const ProductSchema = new Schema<TProduct>(
       type: Number,
       required: true,
     },
-
+    imageLink: {
+      type: String,
+      required:true
+    }
+,
     stock: {
       type: Number,
       required: true,
