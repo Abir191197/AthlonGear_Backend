@@ -20,7 +20,7 @@ app.use(cookieParser());
 // Allow multiple origins for CORS
 const allowedOrigins = [
   "http://localhost:5173",
-  "https://universe-hub.vercel.app",
+  "https://athlon-gear-backend.vercel.app",
 ];
 const corsOptions = {
   origin: (origin: any, callback: any) => {

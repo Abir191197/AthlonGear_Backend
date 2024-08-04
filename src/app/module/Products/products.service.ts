@@ -5,6 +5,7 @@ import { ProductSearchableFields } from "./products.constant";
 import { TProduct } from "./products.interface";
 import ProductsModel from "./products.model";
 
+
 // create product into DB
 
 const createProductIntoDB = async (
@@ -18,6 +19,7 @@ const createProductIntoDB = async (
 //get all  product from db
 
 const getAllProductFromDB = async (query: Record<string, unknown>) => {
+
   const queryObj = { ...query };
 
   const productQuery = new QueryBuilder(ProductsModel.find(), queryObj)
@@ -29,6 +31,15 @@ const getAllProductFromDB = async (query: Record<string, unknown>) => {
 
   const result = await productQuery.modelQuery;
   return result;
+
+
+
+
+
+
+
+
+
 };
 
 //get single product from DB
