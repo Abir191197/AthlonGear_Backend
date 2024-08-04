@@ -1,3 +1,5 @@
+import { ObjectId } from "mongoose";
+
  interface DeliveryMethod {
   
   title: string;
@@ -19,7 +21,7 @@
 }
 
 interface CartItem {
-  productId: string; // Reference to a Product by ID
+  productId: ObjectId[]; // Reference to a Product by ID
   quantity: number;
 }
 

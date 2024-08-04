@@ -7,3 +7,17 @@
 //   .then(() => console.log("Email sending initiated"))
 //   .catch((error: any) => console.error("Email sending failed", error));
 
+import express from "express";
+import { OrderControllers } from "./orders.controller";
+const router = express.Router();
+
+router.post(
+  "/createOrder", 
+  // authVerify Added Later
+OrderControllers.OrderCreate
+
+
+
+)
+
+export const OrdersRoutes = router;
