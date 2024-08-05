@@ -22,27 +22,26 @@ const logger = winston_1.default.createLogger({
     transports: [new winston_1.default.transports.Console()],
 });
 const sendMail = (from, to, subject, html) => __awaiter(void 0, void 0, void 0, function* () {
-    const transporter = nodemailer_1.default.createTransport({
-        service: config_1.default.MAIL_HOST,
-        auth: {
-            user: config_1.default.MAIL_USERNAME,
-            pass: config_1.default.MAIL_PASSWORD,
-        },
-    });
-    const mailOptions = {
-        from: from,
-        to: to,
-        subject: subject,
-        html: html,
-    };
-    logger.info(`Sending mail to - ${to}`);
-    transporter.sendMail(mailOptions, (error, info) => {
-        if (error) {
-            logger.error(error);
-        }
-        else {
-            logger.info("Email sent: " + info.response);
-        }
-    });
+    try {
+        const transporter = nodemailer_1.default.createTransport({
+            service: config_1.default.MAIL_HOST,
+            auth: {
+                user: config_1.default.MAIL_USERNAME,
+                pass: config_1.default.MAIL_PASSWORD,
+            },
+        });
+        const mailOptions = {
+            from: from,
+            to: to,
+            subject: subject,
+            html: html,
+        };
+        logger.info(`Sending mail to - ${to}`);
+        const info = yield transporter.sendMail(mailOptions);
+        logger.info("Email sent: " + info.response);
+    }
+    catch (error) {
+        logger.error(error);
+    }
 });
 exports.sendMail = sendMail;
