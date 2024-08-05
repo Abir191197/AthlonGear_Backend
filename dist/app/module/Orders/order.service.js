@@ -162,11 +162,11 @@ const createOrderIntoDB = (orderData) => __awaiter(void 0, void 0, void 0, funct
                       </tr>
                       <tr>
                           <th>Address</th>
-                          <td>${(_g = order === null || order === void 0 ? void 0 : order.contactForm) === null || _g === void 0 ? void 0 : _g.address}, ${order.contactForm.apartment ? ((_h = order === null || order === void 0 ? void 0 : order.contactForm) === null || _h === void 0 ? void 0 : _h.apartment) + ", " : ""}${(_j = order === null || order === void 0 ? void 0 : order.contactForm) === null || _j === void 0 ? void 0 : _j.city}, ${(_k = order === null || order === void 0 ? void 0 : order.contactForm) === null || _k === void 0 ? void 0 : _k.state}, ${(_l = order === null || order === void 0 ? void 0 : order.contactForm) === null || _l === void 0 ? void 0 : _l.postal}, ${(_m = order === null || order === void 0 ? void 0 : order.contactForm) === null || _m === void 0 ? void 0 : _m.country}</td>
+                          <td>${(_g = order === null || order === void 0 ? void 0 : order.contactForm) === null || _g === void 0 ? void 0 : _g.Address}, ${order.contactForm.Apartment ? ((_h = order === null || order === void 0 ? void 0 : order.contactForm) === null || _h === void 0 ? void 0 : _h.Apartment) + ", " : ""}${(_j = order === null || order === void 0 ? void 0 : order.contactForm) === null || _j === void 0 ? void 0 : _j.City}, ${(_k = order === null || order === void 0 ? void 0 : order.contactForm) === null || _k === void 0 ? void 0 : _k.State}, ${(_l = order === null || order === void 0 ? void 0 : order.contactForm) === null || _l === void 0 ? void 0 : _l.Postal}, ${(_m = order === null || order === void 0 ? void 0 : order.contactForm) === null || _m === void 0 ? void 0 : _m.Country}</td>
                       </tr>
                       <tr>
                           <th>Phone</th>
-                          <td>${((_o = order === null || order === void 0 ? void 0 : order.contactForm) === null || _o === void 0 ? void 0 : _o.phone) || "N/A"}</td>
+                          <td>${((_o = order === null || order === void 0 ? void 0 : order.contactForm) === null || _o === void 0 ? void 0 : _o.Phone) || "N/A"}</td>
                       </tr>
                   </table>
               </div>

@@ -169,11 +169,11 @@ const createOrderIntoDB = async (
                       </tr>
                       <tr>
                           <th>Address</th>
-                          <td>${order?.contactForm?.address}, ${order.contactForm.apartment ? order?.contactForm?.apartment + ", " : ""}${order?.contactForm?.city}, ${order?.contactForm?.state}, ${order?.contactForm?.postal}, ${order?.contactForm?.country}</td>
+                          <td>${order?.contactForm?.Address}, ${order.contactForm.Apartment ? order?.contactForm?.Apartment + ", " : ""}${order?.contactForm?.City}, ${order?.contactForm?.State}, ${order?.contactForm?.Postal}, ${order?.contactForm?.Country}</td>
                       </tr>
                       <tr>
                           <th>Phone</th>
-                          <td>${order?.contactForm?.phone || "N/A"}</td>
+                          <td>${order?.contactForm?.Phone || "N/A"}</td>
                       </tr>
                   </table>
               </div>

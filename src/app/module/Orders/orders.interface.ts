@@ -9,13 +9,13 @@ interface ContactForm {
   email: string;
   firstName: string;
   lastName: string;
-  address: string;
-  apartment?: string;
-  city: string;
-  country: string;
-  state: string;
-  postal: string;
-  phone?: string;
+  Address: string;
+  Apartment?: string;
+  City: string;
+  Country: string;
+  State: string;
+  Postal: string;
+  Phone?: string;
 }
 
 interface CartItem {
