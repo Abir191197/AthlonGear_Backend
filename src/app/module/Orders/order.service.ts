@@ -28,6 +28,8 @@ const createOrderIntoDB = async (
     const products = await ProductsModel.find({ _id: { $in: productIds } })
       .session(session)
       .exec();
+    
+    
 
     // Check if all product IDs are valid
     if (products.length !== productIds.length) {
