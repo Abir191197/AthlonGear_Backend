@@ -1,6 +1,6 @@
 import nodemailer from "nodemailer";
 import winston from "winston";
-import config from "../../config";
+import config from "../../../../config";
 
 
 const logger = winston.createLogger({
@@ -11,7 +11,7 @@ const logger = winston.createLogger({
 
 export const sendMail = async (
   from: string,
-  to: any,
+  to: string,
   subject: string,
   html: string
 ) => {

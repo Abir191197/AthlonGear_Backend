@@ -1,13 +1,9 @@
 import mongoose from "mongoose";
+import { TOrderDetails } from "./orders.interface";
 const { Schema } = mongoose;
 
-// Define schema
-const cartItemSchema = new Schema({
-  productId: { type: Schema.Types.ObjectId, ref: "Products", required: true },
-  quantity: { type: Number, required: true },
-});
 
-const orderDetailsSchema = new Schema(
+const orderDetailsSchema = new Schema<TOrderDetails>(
   {
     orderId: { type: String, required: true },
     orderTotal: { type: Number, required: true },
@@ -27,9 +23,18 @@ const orderDetailsSchema = new Schema(
       postal: { type: String, required: true },
       phone: { type: String },
     },
-    cartItems: [cartItemSchema],
-    createdAt: { type: Date, default: Date.now },
-    updatedAt: { type: Date, default: Date.now },
+    cartItems: [
+      {
+        productId: {
+          type: Schema.Types.ObjectId,
+          ref: "Products",
+          required: true,
+        },
+        title: { type: String, required: true },
+        quantity: { type: Number, required: true },
+      },
+    ],
+
     status: {
       type: String,
       enum: ["processing", "on the way", "delivered"],

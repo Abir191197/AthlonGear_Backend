@@ -1,79 +1,4 @@
-import mongoose from "mongoose";
-import { TOrderDetails } from "./orders.interface";
-import OrderDetailsModel from "./orders.model";
-import ProductsModel from "../Products/products.model";
-import { sendMail } from "../../utils/MailSend";
-
-// Function to generate a simple unique order ID
-const generateOrderId = () =>
-  `ORD-${Date.now()}-${Math.floor(Math.random() * 10000)}`;
-
-const createOrderIntoDB = async (
-  orderData: TOrderDetails
-): Promise<TOrderDetails> => {
-  const session = await mongoose.startSession();
-  session.startTransaction();
-
-  try {
-    // Extract product IDs from cartItems
-    const productIds = orderData.cartItems.map((item) => item.productId);
-    const cartItemMap = new Map(
-      orderData.cartItems.map((item) => [
-        item.productId.toString(),
-        item.quantity,
-      ])
-    );
-
-    // Find products in the database
-    const products = await ProductsModel.find({ _id: { $in: productIds } })
-      .session(session)
-      .exec();
-
-    // Check if all product IDs are valid
-    if (products.length !== productIds.length) {
-      throw new Error("One or more product IDs are invalid or do not exist.");
-    }
-
-    // Verify stock and update quantities
-    for (const product of products) {
-      const quantityNeeded = cartItemMap.get(product._id.toString());
-      if (!quantityNeeded) {
-        throw new Error(
-          `Quantity information missing for product ID: ${product._id}`
-        );
-      }
-      if (product.stock < quantityNeeded) {
-        throw new Error(`Not enough stock for product ID: ${product._id}`);
-      }
-    }
-
-    // Update stock for each product
-    for (const product of products) {
-      const quantityNeeded = cartItemMap.get(product._id.toString());
-      if (quantityNeeded) {
-        await ProductsModel.updateOne(
-          { _id: product._id },
-          { $inc: { stock: -quantityNeeded } }
-        ).session(session);
-      }
-    }
-
-    // Generate a new unique order ID
-    const orderId = generateOrderId();
-
-    // Create new OrderDetails instance with the generated order ID
-    const order = new OrderDetailsModel({ ...orderData, orderId });
-
-    // Save the order to the database
-    await order.save({ session });
-
-    // Prepare email content
-    const toEmail = order.contactForm?.email;
-    const from = "m.abiralam197@gmail.com";
-    const subject = "Order Confirmation";
-
-    // Construct the HTML content for the email
-    const html = `<!DOCTYPE html>
+<!DOCTYPE html>
       <html lang="en">
       <head>
           <meta charset="UTF-8">
@@ -117,7 +42,7 @@ const createOrderIntoDB = async (
                   display: inline-block;
                   padding: 10px 20px;
                   font-size: 16px;
-                  color: #000;
+                  color: #000000;
                   background-color: #54a7ff;
                   text-align: center;
                   text-decoration: none;
@@ -169,11 +94,11 @@ const createOrderIntoDB = async (
                       </tr>
                       <tr>
                           <th>Address</th>
-                          <td>${order?.contactForm?.address}, ${order.contactForm.apartment ? order?.contactForm?.apartment + ", " : ""}${order?.contactForm?.city}, ${order?.contactForm?.state}, ${order?.contactForm?.postal}, ${order?.contactForm?.country}</td>
+                          <td>${order?.contactForm?.address}, ${order.contactForm.apartment ? order?.contactForm?.apartment + ', ' : ''}${order?.contactForm?.city}, ${order?.contactForm?.state}, ${order?.contactForm?.postal}, ${order?.contactForm?.country}</td>
                       </tr>
                       <tr>
                           <th>Phone</th>
-                          <td>${order?.contactForm?.phone || "N/A"}</td>
+                          <td>${order?.contactForm?.phone || 'N/A'}</td>
                       </tr>
                   </table>
               </div>
@@ -185,45 +110,21 @@ const createOrderIntoDB = async (
                           <th>Product Name</th>
                           <th>Quantity</th>
                       </tr>
-                      ${order.cartItems
-                        .map(
-                          (item) => `
+                      ${order.cartItems.map(item => `
                       <tr>
-                          <td>${item?.title}</td>
+                          <td>${item?.productId}</td>
                           <td>${item?.quantity}</td>
                       </tr>
-                      `
-                        )
-                        .join("")}
+                      `).join('')}
                   </table>
               </div>
       
               <a href="https://athlon-gear.vercel.app/track-order?orderId=${orderId}" class="button">Track Your Order</a>
       
-              <div>
+              <div class="footer">
                   <p>Thank you for shopping with us!</p>
                   <p>If you have any questions, please contact our support team.</p>
               </div>
           </div>
       </body>
-      </html>`;
-
-    // Send email
-    await sendMail(from, toEmail, subject, html);
-    console.log("Order confirmation email sent");
-
-    await session.commitTransaction();
-    session.endSession();
-
-    return order.toObject();
-  } catch (error) {
-    console.error("Error creating order:", error);
-    await session.abortTransaction();
-    session.endSession();
-    throw error;
-  }
-};
-
-export const orderService = {
-  createOrderIntoDB,
-};
+      </html>

@@ -15,4 +15,7 @@ exports.default = {
     bcrypt_salt_rounds: process.env.bcrypt_salt_rounds,
     access_key: process.env.access_secret,
     refresh_key: process.env.refresh_secret,
+    MAIL_HOST: process.env.MAIL_HOST,
+    MAIL_USERNAME: process.env.MAIL_USERNAME,
+    MAIL_PASSWORD: process.env.MAIL_PASSWORD,
 };

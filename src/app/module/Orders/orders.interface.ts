@@ -1,33 +1,34 @@
 import { ObjectId } from "mongoose";
 
- interface DeliveryMethod {
-  
+interface DeliveryMethod {
   title: string;
   turnaround: string;
- 
 }
 
- interface ContactForm {
+interface ContactForm {
   email: string;
   firstName: string;
   lastName: string;
-  Address: string;
-  Apartment: string;
-  City: string;
-  Country: string;
-  State: string;
-  Postal: string;
-  Phone: string;
+  address: string;
+  apartment?: string;
+  city: string;
+  country: string;
+  state: string;
+  postal: string;
+  phone?: string;
 }
 
 interface CartItem {
-  productId: ObjectId[]; // Reference to a Product by ID
+  productId: ObjectId;
+  title: string; // Single reference to a Product by ID
   quantity: number;
 }
 
 export interface TOrderDetails {
+  orderId: string;
   orderTotal: number;
   deliveryMethod: DeliveryMethod;
   contactForm: ContactForm;
   cartItems: CartItem[];
+  status: "processing" | "on the way" | "delivered";
 }
