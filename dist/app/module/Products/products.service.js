@@ -27,12 +27,14 @@ const createProductIntoDB = (ProductData) => __awaiter(void 0, void 0, void 0, f
 //get all  product from db
 const getAllProductFromDB = (query) => __awaiter(void 0, void 0, void 0, function* () {
     const queryObj = Object.assign({}, query);
+    // Ensure the query excludes deleted products
+    queryObj.isDeleted = false;
     const productQuery = new QueryBuilder_1.default(products_model_1.default.find(), queryObj)
         .search(products_constant_1.ProductSearchableFields)
         .filter()
         .paginate()
         .sort()
-        .fields(); //chaining
+        .fields(); // Chaining
     const result = yield productQuery.modelQuery;
     return result;
 });
@@ -59,6 +61,10 @@ const updatedProductIntoDB = (id, updateData) => __awaiter(void 0, void 0, void 
     console.log(id);
     console.log(updateData);
     try {
+        // Ensure updateData contains isDeleted
+        if (updateData.isDeleted === undefined) {
+            throw new Error("Update data must include isDeleted field");
+        }
         const updatedProduct = yield products_model_1.default.findOneAndUpdate({ _id: id }, { $set: updateData }, { new: true, runValidators: true });
         if (!updatedProduct) {
             throw new Error("Product not found");
@@ -66,6 +72,7 @@ const updatedProductIntoDB = (id, updateData) => __awaiter(void 0, void 0, void 
         return updatedProduct;
     }
     catch (error) {
+        console.error(error);
         throw new Error("Error updating product");
     }
 });

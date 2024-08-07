@@ -53,7 +53,7 @@ const updatedProduct = catchAsync(async (req, res) => {
   const { id } = req.params;
 
   // Validate incoming data if necessary
-console.log(id);
+
   const result = await productsService.updatedProductIntoDB(id, req.body);
 
   sendResponse(res, {

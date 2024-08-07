@@ -52,7 +52,6 @@ const getSingleProduct = (0, catchAsync_1.default)((req, res) => __awaiter(void 
 const updatedProduct = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { id } = req.params;
     // Validate incoming data if necessary
-    console.log(id);
     const result = yield products_service_1.productsService.updatedProductIntoDB(id, req.body);
     (0, sendResponse_1.default)(res, {
         statusCode: http_status_1.default.OK,

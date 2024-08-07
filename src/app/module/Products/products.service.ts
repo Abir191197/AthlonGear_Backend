@@ -17,29 +17,21 @@ const createProductIntoDB = async (
 };
 
 //get all  product from db
-
 const getAllProductFromDB = async (query: Record<string, unknown>) => {
-
   const queryObj = { ...query };
+
+  // Ensure the query excludes deleted products
+  queryObj.isDeleted = false;
 
   const productQuery = new QueryBuilder(ProductsModel.find(), queryObj)
     .search(ProductSearchableFields)
     .filter()
     .paginate()
     .sort()
-    .fields(); //chaining
+    .fields(); // Chaining
 
   const result = await productQuery.modelQuery;
   return result;
-
-
-
-
-
-
-
-
-
 };
 
 //get single product from DB
@@ -65,14 +57,15 @@ const getSingleProductFromDB = async (id: string) => {
 const updatedProductIntoDB = async (
   id: string,
   updateData: Partial<TProduct>
-
-
-
-
 ) => {
   console.log(id);
   console.log(updateData);
   try {
+    // Ensure updateData contains isDeleted
+    if (updateData.isDeleted === undefined) {
+      throw new Error("Update data must include isDeleted field");
+    }
+
     const updatedProduct = await ProductsModel.findOneAndUpdate(
       { _id: id },
       { $set: updateData },
@@ -85,9 +78,11 @@ const updatedProductIntoDB = async (
 
     return updatedProduct;
   } catch (error) {
+    console.error(error);
     throw new Error("Error updating product");
   }
 };
+
 
 
 export const productsService = {
