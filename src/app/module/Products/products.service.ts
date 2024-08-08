@@ -62,9 +62,7 @@ const updatedProductIntoDB = async (
   console.log(updateData);
   try {
     // Ensure updateData contains isDeleted
-    if (updateData.isDeleted === undefined) {
-      throw new Error("Update data must include isDeleted field");
-    }
+   
 
     const updatedProduct = await ProductsModel.findOneAndUpdate(
       { _id: id },

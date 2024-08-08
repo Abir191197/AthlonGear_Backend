@@ -62,9 +62,6 @@ const updatedProductIntoDB = (id, updateData) => __awaiter(void 0, void 0, void 
     console.log(updateData);
     try {
         // Ensure updateData contains isDeleted
-        if (updateData.isDeleted === undefined) {
-            throw new Error("Update data must include isDeleted field");
-        }
         const updatedProduct = yield products_model_1.default.findOneAndUpdate({ _id: id }, { $set: updateData }, { new: true, runValidators: true });
         if (!updatedProduct) {
             throw new Error("Product not found");
