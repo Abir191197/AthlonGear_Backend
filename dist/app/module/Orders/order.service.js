@@ -17,6 +17,8 @@ const mongoose_1 = __importDefault(require("mongoose"));
 const orders_model_1 = __importDefault(require("./orders.model"));
 const products_model_1 = __importDefault(require("../Products/products.model"));
 const MailSend_1 = require("../../utils/MailSend");
+const AppError_1 = __importDefault(require("../../errors/AppError"));
+const http_status_1 = __importDefault(require("http-status"));
 // Function to generate a simple unique order ID
 const generateOrderId = () => `ORD-${Date.now()}-${Math.floor(Math.random() * 10000)}`;
 const createOrderIntoDB = (orderData) => __awaiter(void 0, void 0, void 0, function* () {
@@ -212,6 +214,27 @@ const createOrderIntoDB = (orderData) => __awaiter(void 0, void 0, void 0, funct
         throw error;
     }
 });
+//Get Single ORder from DB
+const getSingleOrderFromDB = (id) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const result = yield orders_model_1.default.findOne({
+            orderId: id,
+        });
+        if (!result) {
+            throw new AppError_1.default(http_status_1.default.NOT_FOUND, "Order Not found");
+        }
+        return result;
+    }
+    catch (error) {
+        if (error instanceof AppError_1.default) {
+            throw error;
+        }
+        else {
+            throw new AppError_1.default(http_status_1.default.BAD_REQUEST, "Failed to retrieve Order");
+        }
+    }
+});
 exports.orderService = {
     createOrderIntoDB,
+    getSingleOrderFromDB,
 };

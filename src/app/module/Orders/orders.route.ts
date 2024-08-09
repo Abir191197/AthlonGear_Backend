@@ -16,8 +16,16 @@ router.post(
   // authVerify Added Later
 OrderControllers.OrderCreate
 
-
-
 )
+router.get(
+  "/:id",
+  // authVerify Added Later
+  OrderControllers.getSingleOrder
+
+);
+
+
+
+
 
 export const OrdersRoutes = router;

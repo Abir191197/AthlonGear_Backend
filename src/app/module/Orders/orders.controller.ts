@@ -15,6 +15,27 @@ const OrderCreate = catchAsync(async (req, res) => {
   });
 });
 
+
+//Get ORder single
+
+const getSingleOrder = catchAsync(async (req, res) => {
+  const { id } = req.params;
+
+  const result = await orderService.getSingleOrderFromDB(id);
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: "Order Found",
+    data: result,
+  });
+});
+
+
+
+
+
+
 export const OrderControllers = {
   OrderCreate,
+  getSingleOrder,
 };

@@ -17,4 +17,7 @@ const router = express_1.default.Router();
 router.post("/createOrder", 
 // authVerify Added Later
 orders_controller_1.OrderControllers.OrderCreate);
+router.get("/:id", 
+// authVerify Added Later
+orders_controller_1.OrderControllers.getSingleOrder);
 exports.OrdersRoutes = router;

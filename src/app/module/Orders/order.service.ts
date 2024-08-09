@@ -3,6 +3,8 @@ import { TOrderDetails } from "./orders.interface";
 import OrderDetailsModel from "./orders.model";
 import ProductsModel from "../Products/products.model";
 import { sendMail } from "../../utils/MailSend";
+import AppError from "../../errors/AppError";
+import httpStatus from "http-status";
 
 // Function to generate a simple unique order ID
 const generateOrderId = () =>
@@ -228,6 +230,34 @@ const createOrderIntoDB = async (
   }
 };
 
+
+
+//Get Single ORder from DB
+
+const getSingleOrderFromDB = async (id: string) => {
+  try {
+    const result = await OrderDetailsModel.findOne({
+      orderId: id,
+    });
+    if (!result) {
+      throw new AppError(httpStatus.NOT_FOUND, "Order Not found");
+    }
+    return result;
+  } catch (error) {
+    if (error instanceof AppError) {
+      throw error;
+    } else {
+      throw new AppError(httpStatus.BAD_REQUEST, "Failed to retrieve Order");
+    }
+  }
+};
+
+
+
+
+
+
 export const orderService = {
   createOrderIntoDB,
+  getSingleOrderFromDB,
 };
