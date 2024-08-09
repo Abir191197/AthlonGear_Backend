@@ -25,8 +25,10 @@ interface ContactForm {
 
 interface CartItem {
   productId: ObjectId;
-  title: string; // Single reference to a Product by ID
+  title: string;
   quantity: number;
+  price: number;
+  imageLink: string;
 }
 
 export interface TOrderDetails {

@@ -32,6 +32,8 @@ const orderDetailsSchema = new Schema<TOrderDetails>(
         },
         title: { type: String, required: true },
         quantity: { type: Number, required: true },
+        price: { type: Number, required: true },
+        imageLink:{type:String,required:true}
       },
     ],
 
