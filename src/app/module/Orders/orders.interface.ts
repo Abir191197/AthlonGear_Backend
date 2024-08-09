@@ -5,6 +5,11 @@ interface DeliveryMethod {
   turnaround: string;
 }
 
+interface paymentMethods {
+  id: string;
+  title: string;
+}
+
 interface ContactForm {
   email: string;
   firstName: string;
@@ -27,7 +32,7 @@ interface CartItem {
 export interface TOrderDetails {
   orderId: string;
   orderTotal: number;
-  paymentMethods: string;
+  paymentMethods: paymentMethods;
   deliveryMethod: DeliveryMethod;
   contactForm: ContactForm;
   cartItems: CartItem[];

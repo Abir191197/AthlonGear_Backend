@@ -41,9 +41,9 @@ const orderDetailsSchema = new Schema({
         default: "Order placed",
     },
     paymentMethods: {
-        type: String,
-        required: true
-    }
+        id: { type: Number, required: true },
+        title: { type: String, required: true },
+    },
 }, { timestamps: true });
 const OrderDetailsModel = mongoose_1.default.model("OrderDetails", orderDetailsSchema, "OrderDetails");
 exports.default = OrderDetailsModel;
