@@ -203,7 +203,7 @@ const createOrderIntoDB = async (
             </table>
         </div>
 
-        <a href="https://athlon-gear.vercel.app/track-order?orderId=${order?.orderId}" class="button">Track Your Order</a>
+        <a href="https://athlon-gear.vercel.app/Orders/TrackOrder" class="button">Track Your Order</a>
 
         <div class="footer">
             <p>Thank you for shopping with us!</p>

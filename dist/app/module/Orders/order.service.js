@@ -190,7 +190,7 @@ const createOrderIntoDB = (orderData) => __awaiter(void 0, void 0, void 0, funct
             </table>
         </div>
 
-        <a href="https://athlon-gear.vercel.app/track-order?orderId=${order === null || order === void 0 ? void 0 : order.orderId}" class="button">Track Your Order</a>
+        <a href="https://athlon-gear.vercel.app/Orders/TrackOrder" class="button">Track Your Order</a>
 
         <div class="footer">
             <p>Thank you for shopping with us!</p>
