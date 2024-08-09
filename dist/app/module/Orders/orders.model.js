@@ -37,9 +37,13 @@ const orderDetailsSchema = new Schema({
     ],
     status: {
         type: String,
-        enum: ["processing", "on the way", "delivered"],
-        default: "processing",
+        enum: ["Order placed", "Processing", "Shipped", "Delivered"],
+        default: "Order placed",
     },
+    paymentMethods: {
+        type: String,
+        required: true
+    }
 }, { timestamps: true });
 const OrderDetailsModel = mongoose_1.default.model("OrderDetails", orderDetailsSchema, "OrderDetails");
 exports.default = OrderDetailsModel;

@@ -27,8 +27,9 @@ interface CartItem {
 export interface TOrderDetails {
   orderId: string;
   orderTotal: number;
+  paymentMethods: string;
   deliveryMethod: DeliveryMethod;
   contactForm: ContactForm;
   cartItems: CartItem[];
-  status: "processing" | "on the way" | "delivered";
+  status: "Order placed" | "Processing" | "Shipped" | "Delivered";
 }

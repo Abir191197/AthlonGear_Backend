@@ -37,9 +37,13 @@ const orderDetailsSchema = new Schema<TOrderDetails>(
 
     status: {
       type: String,
-      enum: ["processing", "on the way", "delivered"],
-      default: "processing",
+      enum: ["Order placed", "Processing", "Shipped", "Delivered"],
+      default: "Order placed",
     },
+    paymentMethods: {
+      type: String,
+      required: true
+    }
   },
   { timestamps: true }
 );
