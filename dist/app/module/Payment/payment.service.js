@@ -36,7 +36,7 @@ const confirmationService = (orderId, status) => __awaiter(void 0, void 0, void 
             statusMessage = "Payment failed"; // Update the status message on failure
         }
         // Read and modify the HTML template
-        const filePath = (0, path_1.join)(__dirname, `../Payment/${templateFile}`);
+        const filePath = (0, path_1.join)(__dirname, `../../../views/${templateFile}`);
         let template = (0, fs_1.readFileSync)(filePath, "utf-8");
         // Replace placeholder in the template
         template = template.replace("{{message}}", statusMessage);

@@ -30,7 +30,7 @@ const confirmationService = async (orderId: string, status: string) => {
     }
 
     // Read and modify the HTML template
-    const filePath = join(__dirname, `../Payment/${templateFile}`);
+    const filePath = join(__dirname, `../../../views/${templateFile}`);
     let template = readFileSync(filePath, "utf-8");
 
     // Replace placeholder in the template
