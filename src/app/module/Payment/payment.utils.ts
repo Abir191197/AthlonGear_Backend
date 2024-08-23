@@ -7,7 +7,7 @@ interface TContactForm {
   firstName: string;
   lastName: string;
   Address: string;
-  Apartment: string;
+  Apartment?: string;
   City: string;
   Country: string;
   State: string;
@@ -15,32 +15,12 @@ interface TContactForm {
   Phone: number;
 }
 
-interface TDeliveryMethod {
-  id: number;
-  title: string;
-  turnaround: string;
-  price: string;
-}
 
-interface TCartItem {
-  productId: string;
-  title: string;
-  quantity: number;
-  price: number;
-  imageLink: string;
-}
 
-interface TPaymentMethods {
-  id: number;
-  title: string;
-}
 
 interface TOrderDetails {
   orderTotal: number;
-  deliveryMethod: TDeliveryMethod;
   contactForm: TContactForm;
-  cartItems: TCartItem[];
-  paymentMethods: TPaymentMethods;
 }
 
 const url = config.PAYMENT_URL;

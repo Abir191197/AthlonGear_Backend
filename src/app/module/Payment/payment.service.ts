@@ -1,7 +1,7 @@
+import { readFileSync } from "fs";
 import { join } from "path";
 import OrderDetailsModel from "../Orders/orders.model";
 import { verifyPayment } from "./payment.utils";
-import { readFileSync } from "fs";
 
 const confirmationService = async (orderId: string, status: string) => {
   try {
@@ -11,11 +11,7 @@ const confirmationService = async (orderId: string, status: string) => {
     let statusMessage = "Payment not successful or not found"; // Default status message
     let templateFile = "ConfirmationFailure.html"; // Default template for failure
 
-    if (
-      status === "success" &&
-      verifyResponse &&
-      verifyResponse.pay_status === "Successful"
-    ) {
+    if (verifyResponse.pay_status === "Successful") {
       // Update the payment status in the database
       await OrderDetailsModel.findOneAndUpdate(
         { orderId },

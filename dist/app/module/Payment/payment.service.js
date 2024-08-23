@@ -13,19 +13,17 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.paymentServices = void 0;
+const fs_1 = require("fs");
 const path_1 = require("path");
 const orders_model_1 = __importDefault(require("../Orders/orders.model"));
 const payment_utils_1 = require("./payment.utils");
-const fs_1 = require("fs");
 const confirmationService = (orderId, status) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         // Verify the payment status using the transaction/order ID
         const verifyResponse = yield (0, payment_utils_1.verifyPayment)(orderId);
         let statusMessage = "Payment not successful or not found"; // Default status message
         let templateFile = "ConfirmationFailure.html"; // Default template for failure
-        if (status === "success" &&
-            verifyResponse &&
-            verifyResponse.pay_status === "Successful") {
+        if (verifyResponse.pay_status === "Successful") {
             // Update the payment status in the database
             yield orders_model_1.default.findOneAndUpdate({ orderId }, { paymentStatus: "Paid" }, { new: true } // Option to return the updated document
             );
