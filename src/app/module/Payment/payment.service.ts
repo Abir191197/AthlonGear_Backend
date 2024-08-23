@@ -25,7 +25,14 @@ const confirmationService = async (orderId: string) => {
 
     // Read and modify the HTML template
     const filePath = join(__dirname, `../../../views/${templateFile}`);
-    let template = readFileSync(filePath, "utf-8");
+    let template;
+
+    try {
+      template = readFileSync(filePath, "utf-8");
+    } catch (fileError) {
+      console.error("Error reading template file:", fileError);
+      throw new Error("Template file not found");
+    }
 
     // Replace placeholder in the template
     template = template.replace("{{message}}", statusMessage);

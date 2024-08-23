@@ -38,8 +38,8 @@ export async function sendPaymentRequest(paymentData: {
     store_id: config.STORE_ID,
     signature_key: config.SIGNATURE_KEY,
     tran_id: paymentData.orderId,
-    success_url: `https://athlon-gear-backend.vercel.app/api/payment/confirmation?orderId=${paymentData.orderId}&status=success`,
-    fail_url: `https://athlon-gear-backend.vercel.app/api/payment/confirmation?status=failed`,
+    success_url: `https://athlon-gear-backend.vercel.app/api/payment/confirmation?orderId=${paymentData.orderId}`,
+    fail_url: `https://athlon-gear-backend.vercel.app/api/payment/failed`,
     cancel_url: "https://athlon-gear.vercel.app/",
     amount: paymentData.orderData.orderTotal.toFixed(2),
     currency: "BDT", // Assuming BDT as currency, adjust if needed

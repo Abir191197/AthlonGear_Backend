@@ -32,7 +32,14 @@ const confirmationService = (orderId) => __awaiter(void 0, void 0, void 0, funct
         }
         // Read and modify the HTML template
         const filePath = (0, path_1.join)(__dirname, `../../../views/${templateFile}`);
-        let template = (0, fs_1.readFileSync)(filePath, "utf-8");
+        let template;
+        try {
+            template = (0, fs_1.readFileSync)(filePath, "utf-8");
+        }
+        catch (fileError) {
+            console.error("Error reading template file:", fileError);
+            throw new Error("Template file not found");
+        }
         // Replace placeholder in the template
         template = template.replace("{{message}}", statusMessage);
         return template;
