@@ -3,7 +3,7 @@
 ### Sporting Goods small E-Commerce Website
 
 ## Overview
-A comprehensive e-commerce platform for sporting goods, catering to both customer and admin tasks.
+A comprehensive e-commerce platform for sporting goods
 
 ## Tech Stack
 
