@@ -15,13 +15,19 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.PaymentController = void 0;
 const catchAsync_1 = __importDefault(require("../../utils/catchAsync")); // Ensure catchAsync is correctly implemented
 const payment_service_1 = require("./payment.service");
+const sendResponse_1 = __importDefault(require("../../utils/sendResponse"));
+const http_status_1 = __importDefault(require("http-status"));
 const confirmationPayment = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { orderId, status } = req.query;
-    console.log(status);
+    const { orderId } = req.query;
+    console.log(`Processing payment confirmation for orderId: ${orderId}`);
     // Call the service to get the confirmation template
-    const result = yield payment_service_1.paymentServices.confirmationService(orderId, // `orderId` is not validated here, just passed directly
-    status);
-    res.send(result);
+    const result = yield payment_service_1.paymentServices.confirmationService(orderId);
+    (0, sendResponse_1.default)(res, {
+        statusCode: http_status_1.default.OK,
+        success: true,
+        message: "Payment Complete",
+        data: result,
+    });
 }));
 exports.PaymentController = {
     confirmationPayment,

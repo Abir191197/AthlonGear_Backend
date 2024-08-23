@@ -17,7 +17,7 @@ const fs_1 = require("fs");
 const path_1 = require("path");
 const orders_model_1 = __importDefault(require("../Orders/orders.model"));
 const payment_utils_1 = require("./payment.utils");
-const confirmationService = (orderId, status) => __awaiter(void 0, void 0, void 0, function* () {
+const confirmationService = (orderId) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         // Verify the payment status using the transaction/order ID
         const verifyResponse = yield (0, payment_utils_1.verifyPayment)(orderId);
@@ -29,9 +29,6 @@ const confirmationService = (orderId, status) => __awaiter(void 0, void 0, void 
             );
             statusMessage = "Payment successful"; // Update the status message on success
             templateFile = "ConfirmationSuccess.html"; // Template for success
-        }
-        else if (status === "failed") {
-            statusMessage = "Payment failed"; // Update the status message on failure
         }
         // Read and modify the HTML template
         const filePath = (0, path_1.join)(__dirname, `../../../views/${templateFile}`);

@@ -3,7 +3,7 @@ import { join } from "path";
 import OrderDetailsModel from "../Orders/orders.model";
 import { verifyPayment } from "./payment.utils";
 
-const confirmationService = async (orderId: string, status: string) => {
+const confirmationService = async (orderId: string) => {
   try {
     // Verify the payment status using the transaction/order ID
     const verifyResponse = await verifyPayment(orderId);
@@ -21,8 +21,6 @@ const confirmationService = async (orderId: string, status: string) => {
 
       statusMessage = "Payment successful"; // Update the status message on success
       templateFile = "ConfirmationSuccess.html"; // Template for success
-    } else if (status === "failed") {
-      statusMessage = "Payment failed"; // Update the status message on failure
     }
 
     // Read and modify the HTML template

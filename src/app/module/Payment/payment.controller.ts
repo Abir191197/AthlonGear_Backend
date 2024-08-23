@@ -1,20 +1,23 @@
 import { Request, Response } from "express";
 import catchAsync from "../../utils/catchAsync"; // Ensure catchAsync is correctly implemented
 import { paymentServices } from "./payment.service";
+import sendResponse from "../../utils/sendResponse";
+import httpStatus from "http-status";
 
 const confirmationPayment = catchAsync(async (req: Request, res: Response) => {
-  const { orderId, status } = req.query;
+  const { orderId } = req.query;
 
-console.log(status);
+  console.log(`Processing payment confirmation for orderId: ${orderId}`);
+
   // Call the service to get the confirmation template
-  const result = await paymentServices.confirmationService(
-    orderId as string, // `orderId` is not validated here, just passed directly
-    status as string
-  );
+  const result = await paymentServices.confirmationService(orderId as string);
 
-  
- 
-  res.send(result);
+ sendResponse(res, {
+   statusCode: httpStatus.OK,
+   success: true,
+   message: "Payment Complete",
+   data: result,
+ });
 });
 
 export const PaymentController = {
