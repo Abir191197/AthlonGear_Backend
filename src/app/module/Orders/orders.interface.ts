@@ -32,6 +32,7 @@ interface CartItem {
 }
 
 export interface TOrderDetails {
+  name: any;
   orderId: string;
   orderTotal: number;
   paymentMethods: paymentMethods;

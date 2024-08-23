@@ -15,4 +15,7 @@ export default {
   MAIL_HOST: process.env.MAIL_HOST,
   MAIL_USERNAME: process.env.MAIL_USERNAME,
   MAIL_PASSWORD: process.env.MAIL_PASSWORD,
+  STORE_ID: process.env.STORE_ID,
+  SIGNATURE_KEY: process.env.SIGNATURE_KEY,
+  PAYMENT_URL: process.env.PAYMENT_URL,
 };
