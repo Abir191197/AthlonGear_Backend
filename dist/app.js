@@ -21,16 +21,24 @@ app.use((0, cookie_parser_1.default)());
 const allowedOrigins = [
     "http://localhost:5173",
     "https://athlon-gear.vercel.app",
+    "http://localhost:5173/Products/MangeProduct",
+    "http://localhost:5000",
+    "http://localhost:5000/api/payment/confirmation",
+    "http://localhost:5000/api/payment/confirmation",
 ];
+// const corsOptions = {
+//   origin: (origin: any, callback: any) => {
+//     if (!origin || allowedOrigins.includes(origin)) {
+//       callback(null, true);
+//     } else {
+//       console.error(`Blocked by CORS: ${origin}`); // Log the blocked origin for debugging
+//       callback(new Error("Not allowed by CORS"));
+//     }
+//   },
+//   credentials: true,
+// };
 const corsOptions = {
-    origin: (origin, callback) => {
-        if (!origin || allowedOrigins.includes(origin)) {
-            callback(null, true);
-        }
-        else {
-            callback(new Error("Not allowed by CORS"));
-        }
-    },
+    origin: "*", // Allow all origins
     credentials: true,
 };
 app.use((0, cors_1.default)(corsOptions));

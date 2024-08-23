@@ -34,7 +34,7 @@ const orderDetailsSchema = new Schema({
             title: { type: String, required: true },
             quantity: { type: Number, required: true },
             price: { type: Number, required: true },
-            imageLink: { type: String, required: true }
+            imageLink: { type: String, required: true },
         },
     ],
     status: {
@@ -45,6 +45,11 @@ const orderDetailsSchema = new Schema({
     paymentMethods: {
         id: { type: Number, required: true },
         title: { type: String, required: true },
+    },
+    paymentStatus: {
+        type: String,
+        enum: ["Pending", "Paid", "Failed"],
+        default: "Pending",
     },
 }, { timestamps: true });
 const OrderDetailsModel = mongoose_1.default.model("OrderDetails", orderDetailsSchema, "OrderDetails");

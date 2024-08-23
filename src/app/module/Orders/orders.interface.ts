@@ -40,4 +40,5 @@ export interface TOrderDetails {
   contactForm: ContactForm;
   cartItems: CartItem[];
   status: "Order placed" | "Processing" | "Shipped" | "Delivered";
+  paymentStatus: "Pending" | "Paid"|"Failed";
 }

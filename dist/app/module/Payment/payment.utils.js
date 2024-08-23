@@ -13,6 +13,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.sendPaymentRequest = sendPaymentRequest;
+exports.verifyPayment = verifyPayment;
 const axios_1 = __importDefault(require("axios")); // Use this line only if running in a Node.js environment
 const config_1 = __importDefault(require("../../../config"));
 const url = config_1.default.PAYMENT_URL;
@@ -26,9 +27,9 @@ function sendPaymentRequest(paymentData) {
             store_id: config_1.default.STORE_ID,
             signature_key: config_1.default.SIGNATURE_KEY,
             tran_id: paymentData.orderId,
-            success_url: "https://athlon-gear-backend.vercel.app/api/payment/confirmation",
-            fail_url: "http://www.merchantdomain.com/failedpage.html",
-            cancel_url: "http://www.merchantdomain.com/cancelpage.html",
+            success_url: `https://athlon-gear-backend.vercel.app/api/payment/confirmation?orderId=${paymentData.orderId}&status=success`,
+            fail_url: `https://athlon-gear-backend.vercel.app/api/payment/confirmation?status=failed`,
+            cancel_url: "https://athlon-gear.vercel.app/",
             amount: paymentData.orderData.orderTotal.toFixed(2),
             currency: "BDT", // Assuming BDT as currency, adjust if needed
             desc: "Order Payment",
@@ -52,6 +53,26 @@ function sendPaymentRequest(paymentData) {
         catch (error) {
             console.error("Error:", error);
             throw error;
+        }
+    });
+}
+function verifyPayment(tnxId) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const url = `${config_1.default.PAYMENT_VERIFY_URL}`; // URL to verify the payment
+        try {
+            const response = yield axios_1.default.get(url, {
+                params: {
+                    store_id: config_1.default.STORE_ID,
+                    signature_key: config_1.default.SIGNATURE_KEY,
+                    type: 'json',
+                    request_id: tnxId,
+                },
+            });
+            return response.data;
+        }
+        catch (error) {
+            console.error('Payment validation failed:', error);
+            throw new Error('Payment validation failed!');
         }
     });
 }

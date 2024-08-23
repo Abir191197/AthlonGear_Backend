@@ -33,7 +33,7 @@ const orderDetailsSchema = new Schema<TOrderDetails>(
         title: { type: String, required: true },
         quantity: { type: Number, required: true },
         price: { type: Number, required: true },
-        imageLink:{type:String,required:true}
+        imageLink: { type: String, required: true },
       },
     ],
 
@@ -45,6 +45,11 @@ const orderDetailsSchema = new Schema<TOrderDetails>(
     paymentMethods: {
       id: { type: Number, required: true },
       title: { type: String, required: true },
+    },
+    paymentStatus: {
+      type: String,
+      enum: ["Pending", "Paid", "Failed"],
+      default: "Pending",
     },
   },
   { timestamps: true }

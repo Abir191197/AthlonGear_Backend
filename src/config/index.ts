@@ -18,4 +18,5 @@ export default {
   STORE_ID: process.env.STORE_ID,
   SIGNATURE_KEY: process.env.SIGNATURE_KEY,
   PAYMENT_URL: process.env.PAYMENT_URL,
+  PAYMENT_VERIFY_URL: process.env.PAYMENT_VERIFY_URL,
 };
