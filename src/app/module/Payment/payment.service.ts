@@ -3,15 +3,18 @@ import { join } from "path";
 import OrderDetailsModel from "../Orders/orders.model";
 import { verifyPayment } from "./payment.utils";
 
-const confirmationService = async (orderId: string) => {
+const confirmationService = async (orderId: string, status: string) => {
   try {
+   
     // Verify the payment status using the transaction/order ID
     const verifyResponse = await verifyPayment(orderId);
+    
 
     let statusMessage;
     let templateFile;
 
-    if (verifyResponse.pay_status === "Successful") {
+    // Use the passed 'status' parameter to determine the flow
+    if (status === "success" && verifyResponse.pay_status === "Successful") {
       statusMessage = "Payment successful"; // Update the status message on success
       templateFile = "ConfirmationSuccess.html"; // Template for success
 
@@ -20,15 +23,17 @@ const confirmationService = async (orderId: string) => {
         { orderId },
         { paymentStatus: "Paid" }
       );
-    } else {
+    } else if (status === "failed" || verifyResponse.pay_status === "Failed") {
       statusMessage = "Payment failed"; // Update the status message on failure
       templateFile = "ConfirmationFailure.html"; // Template for failure
 
-      // Optionally update the payment status to "Failed" if needed
+      // Update the payment status to "Failed" in the database
       await OrderDetailsModel.findOneAndUpdate(
         { orderId },
         { paymentStatus: "Failed" }
       );
+    } else {
+      throw new Error("Unexpected payment status or response");
     }
 
     // Read and modify the HTML template

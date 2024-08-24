@@ -3,11 +3,14 @@ import catchAsync from "../../utils/catchAsync"; // Ensure catchAsync is correct
 import { paymentServices } from "./payment.service";
 
 const confirmationPayment = catchAsync(async (req: Request, res: Response) => {
-  const { orderId } = req.query;
+  const { orderId,status } = req.query;
 
   try {
     // Call the service to get the confirmation template
-    const result = await paymentServices.confirmationService(orderId as string);
+    const result = await paymentServices.confirmationService(
+      orderId as string,
+      status as string,
+    );
 
     // Set content-type to HTML
     res.setHeader("Content-Type", "text/html");

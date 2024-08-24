@@ -17,23 +17,27 @@ const fs_1 = require("fs");
 const path_1 = require("path");
 const orders_model_1 = __importDefault(require("../Orders/orders.model"));
 const payment_utils_1 = require("./payment.utils");
-const confirmationService = (orderId) => __awaiter(void 0, void 0, void 0, function* () {
+const confirmationService = (orderId, status) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         // Verify the payment status using the transaction/order ID
         const verifyResponse = yield (0, payment_utils_1.verifyPayment)(orderId);
         let statusMessage;
         let templateFile;
-        if (verifyResponse.pay_status === "Successful") {
+        // Use the passed 'status' parameter to determine the flow
+        if (status === "success" && verifyResponse.pay_status === "Successful") {
             statusMessage = "Payment successful"; // Update the status message on success
             templateFile = "ConfirmationSuccess.html"; // Template for success
             // Update the payment status in the database
             yield orders_model_1.default.findOneAndUpdate({ orderId }, { paymentStatus: "Paid" });
         }
-        else {
+        else if (status === "failed" || verifyResponse.pay_status === "Failed") {
             statusMessage = "Payment failed"; // Update the status message on failure
             templateFile = "ConfirmationFailure.html"; // Template for failure
-            // Optionally update the payment status to "Failed" if needed
+            // Update the payment status to "Failed" in the database
             yield orders_model_1.default.findOneAndUpdate({ orderId }, { paymentStatus: "Failed" });
+        }
+        else {
+            throw new Error("Unexpected payment status or response");
         }
         // Read and modify the HTML template
         const filePath = (0, path_1.join)(__dirname, `../../../views/${templateFile}`);

@@ -6,4 +6,5 @@ const router = express.Router();
 
 router.post("/confirmation", PaymentController.confirmationPayment);
 
+
 export const PaymentRoutes = router;

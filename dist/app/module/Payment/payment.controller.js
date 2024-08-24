@@ -16,10 +16,10 @@ exports.PaymentController = void 0;
 const catchAsync_1 = __importDefault(require("../../utils/catchAsync")); // Ensure catchAsync is correctly implemented
 const payment_service_1 = require("./payment.service");
 const confirmationPayment = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { orderId } = req.query;
+    const { orderId, status } = req.query;
     try {
         // Call the service to get the confirmation template
-        const result = yield payment_service_1.paymentServices.confirmationService(orderId);
+        const result = yield payment_service_1.paymentServices.confirmationService(orderId, status);
         // Set content-type to HTML
         res.setHeader("Content-Type", "text/html");
         // Send the HTML response
