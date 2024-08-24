@@ -34,6 +34,7 @@ const confirmationService = async (orderId: string, status: string) => {
       throw new Error("Unexpected payment status or response");
     }
 
+
     // Read and modify the HTML template
     const filePath = join(__dirname, `../../../views/${templateFile}`);
 
