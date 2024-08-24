@@ -8,25 +8,33 @@ const confirmationService = async (orderId: string) => {
     // Verify the payment status using the transaction/order ID
     const verifyResponse = await verifyPayment(orderId);
 
-    let statusMessage = "Payment not successful or not found"; // Default status message
-    let templateFile = "ConfirmationFailure.html"; // Default template for failure
+    let statusMessage;
+    let templateFile;
 
     if (verifyResponse.pay_status === "Successful") {
+      statusMessage = "Payment successful"; // Update the status message on success
+      templateFile = "ConfirmationSuccess.html"; // Template for success
+
       // Update the payment status in the database
       await OrderDetailsModel.findOneAndUpdate(
         { orderId },
-        { paymentStatus: "Paid" },
-        { new: true } // Option to return the updated document
+        { paymentStatus: "Paid" }
       );
+    } else {
+      statusMessage = "Payment failed"; // Update the status message on failure
+      templateFile = "ConfirmationFailure.html"; // Template for failure
 
-      statusMessage = "Payment successful"; // Update the status message on success
-      templateFile = "ConfirmationSuccess.html"; // Template for success
+      // Optionally update the payment status to "Failed" if needed
+      await OrderDetailsModel.findOneAndUpdate(
+        { orderId },
+        { paymentStatus: "Failed" }
+      );
     }
 
     // Read and modify the HTML template
     const filePath = join(__dirname, `../../../views/${templateFile}`);
-    let template;
 
+    let template;
     try {
       template = readFileSync(filePath, "utf-8");
     } catch (fileError) {

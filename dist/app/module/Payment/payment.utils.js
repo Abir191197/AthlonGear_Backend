@@ -28,7 +28,7 @@ function sendPaymentRequest(paymentData) {
             signature_key: config_1.default.SIGNATURE_KEY,
             tran_id: paymentData.orderId,
             success_url: `https://athlon-gear-backend.vercel.app/api/payment/confirmation?orderId=${paymentData.orderId}`,
-            fail_url: `https://athlon-gear-backend.vercel.app/api/payment/failed`,
+            fail_url: `https://athlon-gear-backend.vercel.app/api/payment/confirmation?failed`,
             cancel_url: "https://athlon-gear.vercel.app/",
             amount: paymentData.orderData.orderTotal.toFixed(2),
             currency: "BDT", // Assuming BDT as currency, adjust if needed
@@ -64,15 +64,15 @@ function verifyPayment(tnxId) {
                 params: {
                     store_id: config_1.default.STORE_ID,
                     signature_key: config_1.default.SIGNATURE_KEY,
-                    type: 'json',
+                    type: "json",
                     request_id: tnxId,
                 },
             });
             return response.data;
         }
         catch (error) {
-            console.error('Payment validation failed:', error);
-            throw new Error('Payment validation failed!');
+            console.error("Payment validation failed:", error);
+            throw new Error("Payment validation failed!");
         }
     });
 }

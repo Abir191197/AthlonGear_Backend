@@ -15,9 +15,6 @@ interface TContactForm {
   Phone: number;
 }
 
-
-
-
 interface TOrderDetails {
   orderTotal: number;
   contactForm: TContactForm;
@@ -39,7 +36,7 @@ export async function sendPaymentRequest(paymentData: {
     signature_key: config.SIGNATURE_KEY,
     tran_id: paymentData.orderId,
     success_url: `https://athlon-gear-backend.vercel.app/api/payment/confirmation?orderId=${paymentData.orderId}`,
-    fail_url: `https://athlon-gear-backend.vercel.app/api/payment/failed`,
+    fail_url: `https://athlon-gear-backend.vercel.app/api/payment/confirmation?failed`,
     cancel_url: "https://athlon-gear.vercel.app/",
     amount: paymentData.orderData.orderTotal.toFixed(2),
     currency: "BDT", // Assuming BDT as currency, adjust if needed
@@ -67,24 +64,22 @@ export async function sendPaymentRequest(paymentData: {
   }
 }
 
-
-
 export async function verifyPayment(tnxId: string) {
   const url = `${config.PAYMENT_VERIFY_URL}`; // URL to verify the payment
-  
+
   try {
     const response = await axios.get(url, {
       params: {
         store_id: config.STORE_ID,
         signature_key: config.SIGNATURE_KEY,
-        type: 'json',
+        type: "json",
         request_id: tnxId,
       },
     });
 
     return response.data;
   } catch (error) {
-    console.error('Payment validation failed:', error);
-    throw new Error('Payment validation failed!');
+    console.error("Payment validation failed:", error);
+    throw new Error("Payment validation failed!");
   }
 }

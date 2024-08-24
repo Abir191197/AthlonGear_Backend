@@ -21,14 +21,19 @@ const confirmationService = (orderId) => __awaiter(void 0, void 0, void 0, funct
     try {
         // Verify the payment status using the transaction/order ID
         const verifyResponse = yield (0, payment_utils_1.verifyPayment)(orderId);
-        let statusMessage = "Payment not successful or not found"; // Default status message
-        let templateFile = "ConfirmationFailure.html"; // Default template for failure
+        let statusMessage;
+        let templateFile;
         if (verifyResponse.pay_status === "Successful") {
-            // Update the payment status in the database
-            yield orders_model_1.default.findOneAndUpdate({ orderId }, { paymentStatus: "Paid" }, { new: true } // Option to return the updated document
-            );
             statusMessage = "Payment successful"; // Update the status message on success
             templateFile = "ConfirmationSuccess.html"; // Template for success
+            // Update the payment status in the database
+            yield orders_model_1.default.findOneAndUpdate({ orderId }, { paymentStatus: "Paid" });
+        }
+        else {
+            statusMessage = "Payment failed"; // Update the status message on failure
+            templateFile = "ConfirmationFailure.html"; // Template for failure
+            // Optionally update the payment status to "Failed" if needed
+            yield orders_model_1.default.findOneAndUpdate({ orderId }, { paymentStatus: "Failed" });
         }
         // Read and modify the HTML template
         const filePath = (0, path_1.join)(__dirname, `../../../views/${templateFile}`);
