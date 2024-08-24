@@ -5,10 +5,8 @@ import { verifyPayment } from "./payment.utils";
 
 const confirmationService = async (orderId: string, status: string) => {
   try {
-   
     // Verify the payment status using the transaction/order ID
     const verifyResponse = await verifyPayment(orderId);
-    
 
     let statusMessage;
     let templateFile;
@@ -23,7 +21,7 @@ const confirmationService = async (orderId: string, status: string) => {
         { orderId },
         { paymentStatus: "Paid" }
       );
-    } else if (status === "failed" || verifyResponse.pay_status === "Failed") {
+    } else if (verifyResponse.pay_status === "Failed") {
       statusMessage = "Payment failed"; // Update the status message on failure
       templateFile = "ConfirmationFailure.html"; // Template for failure
 

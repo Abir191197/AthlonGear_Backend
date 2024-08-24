@@ -30,7 +30,7 @@ const confirmationService = (orderId, status) => __awaiter(void 0, void 0, void 
             // Update the payment status in the database
             yield orders_model_1.default.findOneAndUpdate({ orderId }, { paymentStatus: "Paid" });
         }
-        else if (status === "failed" || verifyResponse.pay_status === "Failed") {
+        else if (verifyResponse.pay_status === "Failed") {
             statusMessage = "Payment failed"; // Update the status message on failure
             templateFile = "ConfirmationFailure.html"; // Template for failure
             // Update the payment status to "Failed" in the database
